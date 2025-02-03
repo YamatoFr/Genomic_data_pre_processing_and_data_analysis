@@ -1,34 +1,33 @@
-\documentclass[12pt]{report}
+\documentclass[12pt,notitlepage]{report}
+\usepackage[french,english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[top = 1.5cm, bottom = 1.5cm, left = 1.0cm, right = 1.0cm]{geometry}
-\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\usepackage[
+	vmargin = 2cm,
+	hmargin = 2.5cm
+	]{geometry}
+\usepackage[
+	defernumbers=true,
+	backend=biber,
+	style=numeric,
+	sorting=nyt
+	]{biblatex}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[T1]{fontenc}
-\usepackage[french]{babel}
 \usepackage[title]{appendix}
 \usepackage[most]{tcolorbox}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsfonts}
-\usepackage{adjustbox}
-\usepackage{caption}
+
+\usepackage{fancyhdr, listings, minted, verbatim, indentfirst, underscore}
+\usepackage{adjustbox, caption, graphicx, subcaption, threeparttable}
+\usepackage{lastpage, longtable, tocloft, xcolor, bookmark}
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\usepackage{mathptmx, lmodern}
+\usepackage{hyperref, url}
+\usepackage{titlesec, notoccite}
+\usepackage{tocloft}
+
+% "csquotes should be loaded after fvextra to avoid a warning from the lineno package"
+% but in this case the culprit is the "minted" package
 \usepackage{csquotes}
-\usepackage{fancyhdr}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{lmodern}
-\usepackage{listings}
-\usepackage{lastpage}
-\usepackage{longtable}
-\usepackage{minted}
-\usepackage{mathtools}
-\usepackage{ragged2e}
-\usepackage{subcaption}
-\usepackage{tocloft,url}
-\usepackage{threeparttable}
-\usepackage{url}
-\usepackage{verbatim}
-\usepackage{xcolor}
 
 %----------------------------------------------------------------------------------
 %									  COMMANDES
@@ -43,6 +42,8 @@
 \setlength{\parskip}{0.5em}
 
 \setcounter{secnumdepth}{3}
+\counterwithout{table}{chapter}
+\counterwithout{equation}{chapter}
 
 \newlistof{links}{lks}{Liste des liens}
 \newcommand\externallink[2]{%
@@ -60,6 +61,10 @@
 	urlcolor=blue,
 	citecolor=darkgray,
 	pdftitle={Rapport de stage}
+}
+
+\AtEveryBibitem{%
+  \clearfield{note}%
 }
 
 \newcommand\NB[1][0.3]{N\kern-#1em{B}}
@@ -84,7 +89,7 @@
 		%%Création d'une nouvelle commande pour créer une barre horizontale
 		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 		
-		\renewcommand{\contentsname}{Sommaire}
+		\renewcommand{\contentsname}{Table of Contents}
 		
 		\DeclareMathOperator*{\argmin}{arg\,min}
 		\DeclareMathOperator*{\argmax}{arg\,max}
@@ -96,16 +101,15 @@
 		\vbadness 11000
 		\interlinepenalty 10000
 		
-		\title{{\huge \bfseries Title}\\[0.2cm]
-		{\Large sub title}}
-		\author{Théo \textsc{FIGINI}\\XX Informatique\\Année universitaire 20XX-XX}
-		\date{date}
+		\title{{\huge \bfseries Pré-traitement et analyse de données génomiques à l'aide d'outils de fouille de données}\\[0.2cm]}
+		\author{Théo \textsc{FIGINI}\\M2 Computer Science\\Academic year 2024-2025}
+		\date{June, 20\textsuperscript{th} 2025}
 		\makeatletter
 		\setcounter{chapter}{0}
 		
 		\pagestyle{fancyplain}
 		\fancyhf{}
-		\lhead{header}
+		\lhead{}
 		\rhead{\leftmark}
 		\cfoot{Page \thepage /\pageref{LastPage}}
 		\renewcommand{\headrulewidth}{0.5pt}
@@ -116,21 +120,43 @@
 		\renewcommand\topfraction{.9}
 		\renewcommand\textfraction{0.35}
 		\renewcommand\floatpagefraction{0.8}
-		
-		% \bibliography{biblio}
+
+		\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
 		
 		\counterwithout{figure}{chapter}
-		
-		
+
+		\addbibresource{biblio.bib}
+		\DeclareBibliographyCategory{cited}
+		\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
+
 \begin{document}
+
+\titleformat{\chapter}{\normalfont\large\bfseries}{\thechapter}{20pt}{}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+
+\titlespacing*{\chapter}{0pt}{-10pt}{25pt}
+
 \include{pageDeGarde}
+
+\include{remerciements}
 
 \renewcommand{\thefigure}{\arabic{figure}}
 \setcounter{figure}{0}
 
+\pagenumbering{arabic}
+\tableofcontents
+\addtocontents{toc}{\cftpagenumbersoff{subsec}}
+
+\include{abstract}
 \include{introduction}
+\include{etatdelart}
 \include{realisation}
 \include{conclusion}
 
-% \printbibliography
+\include{annexe}
+
+\printbibliography
+% \printbibliography[heading=subbibintoc,keyword={src},title={Data Sources}]
+
 \end{document}
