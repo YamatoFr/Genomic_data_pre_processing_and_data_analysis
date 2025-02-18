@@ -41,6 +41,20 @@ def get_files_in_folder(folder_path):
 
 	return files
 
+def print_to_file(file_path, file_name, content):
+	"""
+	Writes the content to a file.
+
+	Args:
+		file_path (str): The path to the directory where the file should be saved.
+		file_name (str): The name of the file.
+		content (str): The content to write to the file.
+	"""
+	if not os.path.exists(file_path):
+		os.makedirs(file_path)
+	with open(os.path.join(file_path, file_name), 'w') as file:
+		file.write(content)
+
 # Example usage
 
 # # Define the path to the folder containing gene sequences
@@ -53,5 +67,5 @@ def get_files_in_folder(folder_path):
 # for file_path in files[:1]:
 # 	gene_sequences = parse_gene_sequences(file_path)
 # 	for gene_id, gene_sequence in gene_sequences.items():
-# 		print(gene_id, "\n",gene_sequence)
+# 		print(gene_id.partition(" ")[2])
 	

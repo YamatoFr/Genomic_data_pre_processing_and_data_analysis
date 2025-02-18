@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 
 import os, sys
@@ -117,8 +118,6 @@ model.fit(final_reduced_data, final_reduced_data, batch_size=32, epochs=500, ver
 
 # Get the cluster assignments
 clusters = KMeans(n_clusters=7).fit_predict(final_reduced_data)
-
-import matplotlib.pyplot as plt
 
 # Plot the PCA-reduced data with cluster assignments
 plt.figure(figsize=(10, 8))
