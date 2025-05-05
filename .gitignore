@@ -279,3 +279,8 @@ TSWLatexianTemp*
 *.pyc
 
 documents/tables
+
+.vscode
+.conda
+
+scripts/img_analysis/images
