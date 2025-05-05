@@ -57,7 +57,7 @@ def print_to_file(file_path, file_name, content):
 
 # Example usage
 
-# # Define the path to the folder containing gene sequences
+# Define the path to the folder containing gene sequences
 # folder_path = "D:\genes\TUBERCULOSE\Prokka7kFFN_FINAL"
 
 # # Get the paths to all files in the folder
@@ -66,6 +66,5 @@ def print_to_file(file_path, file_name, content):
 # # Parse the gene sequences from each file
 # for file_path in files[:1]:
 # 	gene_sequences = parse_gene_sequences(file_path)
-# 	for gene_id, gene_sequence in gene_sequences.items():
-# 		print(gene_id.partition(" ")[2])
-	
+# 	for gene_id, _ in gene_sequences.items():
+# 		print(gene_id)

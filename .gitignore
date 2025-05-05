@@ -282,5 +282,9 @@ documents/tables
 
 .vscode
 .conda
+.zip
 
 scripts/img_analysis/images
+scripts/img_analysis/DSTGENES
+scripts/img_analysis/images.zip
+documents/protein_counts.zip
