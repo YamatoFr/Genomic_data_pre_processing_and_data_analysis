@@ -285,8 +285,10 @@ documents/tables
 .zip
 
 scripts/img_analysis/images
-scripts/img_analysis/combined-dataset*
+scripts/img_analysis/combined*
 scripts/img_analysis/DSTGENES
 scripts/img_analysis/mosaics
 scripts/img_analysis/images.zip
+scripts/img_analysis/test-raw
+scripts/img_analysis/train-*
 documents/protein_counts.zip
