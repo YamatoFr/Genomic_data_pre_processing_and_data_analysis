@@ -14,9 +14,10 @@ The following tools and technologies were used to develop the algorithms and doc
 \begin{itemize}
 	\item \textbf{Python}: a programming language widely used in scientific computing, data analysis, and machine learning.
 	\item \textbf{GitHub}: a version control platform for managing the source code.
+	\item \textbf{GitHub Copilot}: for code completion.
 	\item \textbf{Jupyter Notebook}: an interactive environment for writing and executing Python code, ideal for data analysis and
 	      visualization.
-	\item \textbf{sklearn}: a Python library for machine learning that provides various algorithms and tools for data preprocessing,
+	\item \textbf{Sklearn}: a Python library for machine learning that provides various algorithms and tools for data preprocessing,
 	      model selection, and evaluation.
 	\item \LaTeX : a typesetting system used for writing technical and scientific documents.
 	\item A personal computer running Windows 11 with a \textbf{Ryzen 7 6800H} processor and \textbf{32 GB} of RAM.
@@ -30,7 +31,7 @@ The following tools and technologies were used to develop the algorithms and doc
 
 Genomic data refers to the information contained in the DNA of an organism, which includes the sequences of nucleotides (A, T, C, G).
 These are gathered through various methods, such as DNA sequencing, and can be used to study the genetic makeup of organisms,
-identify genetic variations, and understand the relationships between different species. The Institut Pasteur has a large collection
+identify genetic variations, and understand the relationships between different species. The Institute Pasteur has a large collection
 of genomic data, including the genomes of various strains of Tuberculosis (TB), which is a major public health concern worldwide.
 
 \section{The FASTA format}
@@ -43,92 +44,29 @@ information about the sequence, such as its identifier, description, or source. 
 Figure~\ref{fig:fasta_example}.
 
 \begin{center}
-	\begin{figure}[htbp]
+	\begin{figure}[H]
 		\begin{BVerbatim}
 			>sequence_id
 			ATCGATCGATCGATCGATCGATCGATCG
-			>another_sequence_id
+			>sequence_id_2
 			GCTAGCTAGCTAGCTAGCTAGCTAGCTA
+			>sequence_id_3
+			TAGCTAGCTAGCTAGCTAGCTAGCTAGC
+			>sequence_id_4
+			AGCTAGCTAGCTAGCTAGCTAGCTAGCT
+			>sequence_id_5
+			CATCGATCGATCGATCGATCGATCGATC
 		\end{BVerbatim}
 		\caption{Example of a FASTA file containing two sequences.}
 		\label{fig:fasta_example}
 	\end{figure}
 \end{center}
 
-The FASTA format is simple and easy to read, making it suitable for storing large amounts of sequence data. It is also compatible with
-many bioinformatics tools and software, allowing for easy analysis and manipulation of sequence data.
+The FASTA format is simple and easy to read, making it suitable for storing large amounts of sequence data. It is also compatible
+with many bioinformatics tools and software, allowing for easy analysis and manipulation of sequence data.
 
 \chapter{Clustering genomic data}
 \label{chap:clustering_genomic_data}
-
-\section{Introduction to K-means}
-\label{sec:intro_kmeans}
-
-K-means clustering is a widely used unsupervised learning algorithm for partitioning a dataset into $k$ distinct clusters.
-It works by iinitializing $k$ cluster centers, then iteratively assigning data points to the nearest cluster center and
-updating the centers based on the distances to the assigned points (usually using Euclidean distance). The algorithm
-continues until the cluster centers stabilize or a maximum number of iterations is reached.
-
-Results can vary based on the initial choice of cluster centers, which can lead to different clustering outcomes.
-The quality of clusters is typically evaluated using at least two criteria:
-
-\begin{itemize}
-	\item \textbf{Intra-cluster variance} : the average distance between points within the same cluster.
-	\item \textbf{Inter-cluster variance} : the average distance between centers of different clusters.
-\end{itemize}
-
-\subsection{K-means Algorithm}
-\label{subsec:kmeans_algorithm}
-
-The K-means algorithm consists of the following steps:
-\begin{enumerate}
-	\item Initialize $k$ cluster centers randomly.
-	\item Assign each data point to the nearest cluster center.
-	\item Update the cluster centers by calculating the mean of the points assigned to each cluster.
-	\item Repeat steps 2 and 3 until convergence (i.e., when cluster centers do not change significantly).
-	\item Optionally, evaluate the clustering quality using metrics like inertia or silhouette score.
-\end{enumerate}
-
-\section{Silhouette Score}
-\label{subsec:silhouette_score}
-
-The silhouette score is a metric used to evaluate the quality of clustering. It measures how similar an object
-is to its own cluster compared to other clusters. The silhouette score is calculated for each data point and
-ranges from -1 to 1. The formula for the silhouette score of a point $i$ is:
-
-\begin{equation}
-	s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
-\end{equation}
-
-Where $a(i)$ is the average distance from point $i$ to all other points in the same cluster, and $b(i)$ is the
-average distance from point $i$ to all points in the nearest cluster. A higher silhouette score indicates better
-clustering quality.
-
-\section{Principal Component Analysis (PCA)}
-\label{subsec:pca}
-
-Principal Component Analysis (PCA) is a dimensionality reduction technique that transforms a dataset into a new coordinate system,
-where the axes (principal components) are ordered by the amount of variance they capture from the data. It was first introduced by
-\textbf{Karl Pearson} in 1901\textsuperscript{\cite{Pearson-1901}} and later popularized by \textbf{Harold Hotelling} in
-1933\textsuperscript{\cite{Hotelling-1933}}. PCA is widely used in data analysis, PCA is particularly useful for reducing the
-dimensionality of large datasets while preserving as much variance as possible. The steps involved in PCA are:
-
-\begin{enumerate}
-	\item \textbf{Standardize the data}: Center the data by subtracting the mean and scaling it to unit variance.
-	\item \textbf{Compute the covariance matrix}: Calculate the covariance matrix of the standardized data.
-	\item \textbf{Compute the eigenvalues and eigenvectors}: Find the eigenvalues and eigenvectors of the covariance matrix.
-	\item \textbf{Sort the eigenvalues and eigenvectors}: Sort the eigenvalues in descending order and arrange the corresponding
-	      eigenvectors accordingly.
-	\item \textbf{Select the top $k$ eigenvectors}: Choose the top $k$ eigenvectors corresponding to the largest eigenvalues, where $k$ is
-	      the desired number of dimensions to retain.
-	\item \textbf{Transform the data}: Project the original data onto the new coordinate system defined by the selected eigenvectors.
-\end{enumerate}
-
-Note: an eigenvector or characteristic vector is a vector that does not change direction during a linear transformation,
-but may change in magnitude. The eigenvalue is the factor by which the eigenvector is scaled during the transformation.
-
-In this project, we use the integrated PCA implementation from the \textit{sklearn} library, which provides a convenient way to perform PCA
-on datasets.
 
 \section{Preprocessing Genomic Data}
 \label{sec:preprocessing_genomic_data}
@@ -159,16 +97,16 @@ score.
 \label{subsec:first_results}
 
 The initial results showed that the silhouette score was highest for $k=9$, indicating that this was the optimal number of clusters.
-However, the clusters were not well separated or some points are alone in their cluster, as seen in Figure {TODO:figure:clusters_k9}.
+However, the clusters were not well separated, or some points are alone in their cluster, as seen in Figure {TODO:figure:clusters_k9}.
 Which suggests that the data may not be well suited for clustering with K-means, or that the features used for clustering are not
 informative enough.
 
 TODO: figure clusters_k9
 
-We also tried without applying PCA but achieved similar results, we also observed a fewer points than expected as seen in
-Figure {TODO:figure:clusters_k9_no_pca}, after reviewing the data, we found that there is significant overlap between the points.
+We also tried without applying PCA but achieved similar results, we also observed fewer points than expected as seen in
+Figure {TODO:figure:clusters_k9_no_PCA}, after reviewing the data, we found that there is significant overlap between the points.
 
-TODO: figure clusters_k9_no_pca
+TODO: figure clusters_k9_no_PCA
 
 So we switched to 3D visualization to better understand the clusters,
 
@@ -224,47 +162,42 @@ densities and can identify clusters of different shapes and sizes. The algorithm
 \chapter{Using CNNs to identify TB Strains}
 \label{chap:cnn_tb_strains}
 
-\section{Introduction to CNNs}
-\label{sec:intro_cnn}
-
-The fondamental idea behind \textbf{Convolutional Neural Networks (CNNs)} was introduced by Kunihiko Fukushima\textsuperscript{\cite{Fukushima-1987}}
-in 1980 and later popularized by Yann LeCun in the 1990s with the LeNet architecture\textsuperscript{\cite{Lecun-et-al-1998}}. CNNs are a class of
-deep learning models specifically designed for processing structured grid data, such as images. They are particularly effective for
-tasks like image classification, object detection, and segmentation.
-
-CNNs work by applying convolutional filters to the input data, which allows them to learn spatial hierarchies of features.
-It shares some similarities with the more conventional neural networks, but there is at least two different types
-of layers that are specific to CNNs:
-
-\begin{itemize}
-	\item \textbf{Convolutional layers}: These layers apply convolutional filters to the input data, extracting local features
-	      that are invariant to translation. The filters slide over the input data, computing dot products and producing feature maps.
-	\item \textbf{Pooling layers}: These layers downsample the feature maps, reducing their spatial dimensions while retaining important
-	      information. Common pooling operations include max pooling and average pooling.
-\end{itemize}
-
-The architecture of a CNN typically consists of multiple convolutional and pooling layers followed by fully connected layers.
-The convolutional layers learn to extract features from the input data, while the fully connected layers perform the final classification
-or regression task. The training process involves optimizing the weights of the filters and fully connected layers using backpropagation
-and a loss function, such as cross-entropy for classification tasks.
-
 \section{Building the dataset}
 \label{sec:building_dataset}
 
-For this experiment, each genome was converted into an image where each pixel is determined by a combination of three metrics of following
-metrics:
+For this experiment, each genome was converted into an image where each pixel is determined by a combination of three metrics of
+following metrics:
 
 \begin{itemize}
-	\item \textbf{Chargaff}
-	\item \textbf{Composition}
-	\item \textbf{Diversity}
-	\item \textbf{Skew}
-	\item \textbf{Nuclescore}
+	\item \textbf{Chargaff} index: provides the fraction of nucleic bases G and C of the sequence. The formula is:
+	      \begin{equation}
+		      100 \times \frac{Gcount + Ccount}{Sequence\_size}
+	      \end{equation}
+	\item \textbf{Component} index: evaluates the distribution of the bases in a sequence by comparing the number of each base A and
+	      T to the expected frequency of those bases in a balanced distribution. The formula is:
+	      \begin{equation}
+		      \frac{(Acount + Tcount) + \frac{Sequence\_size}{2}}{\frac{Sequence\_size}{2}}
+	      \end{equation}
+	\item \textbf{Diversity} index: measures the diversity of bases in a sequence by comparing the number of different subsequences of a
+	      given size to the expected frequency of those subsequences in a balanced distribution. The formula is:
+	      \begin{equation}
+		      \frac{Number\textsubscript{unique subsequences}}{Expected\textsubscript{subsequences frequency}}
+	      \end{equation}
+	\item \textbf{Skew} index: measures the asymmetry of the distribution of nucleobases in a sequence. The formula is:
+	      \begin{equation}
+		      \frac{(Gcount - Ccount)}{Sequence\_size}
+	      \end{equation}
+	\item \textbf{Nuclescore} index: empirical measure that combines multiple metrics from a genome sequence to synthesize the nucleotide
+	      information of a genome in order to differentiate species based only on their sequences. The formula is:
+	      \begin{equation}
+		      \log_{2}(\frac{Variance \times GC\textsubscript{ratio} \times AT\textsubscript{count}/GC\textsubscript{ratio}}{\sqrt{Sequence\_size}})
+	      \end{equation}
 \end{itemize}
 
-We get ten combinations of these metrics, each represented by a different color channel in the image. We applied this conversion at different
-resolutions, from 4px (2x2) to 100px (10x10), the resulting images put into their corresponding class based on the strain they belong to. We
-have the following classes:
+We get ten combinations of these metrics, each represented by a different color channel in the image after being normalized to the range [0, 255].
+This conversion is applied at different resolutions, from 4px (2x2) to 100px (10x10), but for the training, all images were resized to a 32x32px resolution.
+The resulting images put into their corresponding class based on the strain they belong to, as shown in Figure~\ref{fig:example_image}. We have the following
+classes:
 
 \begin{itemize}
 	\item \textbf{M} with 185 samples.
@@ -274,18 +207,90 @@ have the following classes:
 	\item \textbf{Indo-Oceanic} with 259 samples.
 \end{itemize}
 
+We also made mosaic images by combining the corresponding images from each combination of metrics resulting in a 5x2 grid resulting in a
+rectangular image as shown in Figure~\ref{fig:mosaic_example}.
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.4\textwidth]
+		{../scripts/img_analysis/train-raw/arrays/100px/Chargaff-Composante-Diversite/_M_/GCF_000010685.1_ASM1068v1_genomic.fna.ffn_M_100px_Chargaff-Composante-Diversite.png}
+		\caption{Example of an image generated from the genome of a TB strain using the Chargaff, Component and Diversity metrics at 100px resolution.}
+		\label{fig:example_image}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../scripts/img_analysis/test-raw/mosaics/100px/_M_/GCF_000666425.1_Myco_afri_MAL010100_V1_genomic.fna.ffn_M_100px_mozaic.png}
+		\caption{Example of a mosaic image obtained from the individual images at 100px resolution.}
+		\label{fig:mosaic_example}
+	\end{minipage}
+\end{figure}
+
 
 \subsection{Initial testing}
 \label{subsec:initial_testing}
 
 The resulting dataset is highly imbalanced, with some classes having significantly more samples than others. This can lead to biased models
 that perform poorly on minority classes. We decided to train our CNN on the dataset as-is, without any preprocessing or balancing techniques,
-to see how it performs on the imbalanced dataset.
+to see how it performs on the imbalanced dataset. For the sake of brevity, we will only present the results for the combination of Chargaff,
+Composition and Diversity metrics at 100px resolution, for the mosaic images we will present the results for the 100px resolution as well.
+
+\subsubsection{Results}
+\label{subsubsec:results_initial_testing}
+
+As shown in Figure~\ref{fig:cnn_validation_accuracy_std}, the 4px images yielded the worst performance, with a validation accuracy between 67\%
+and 76\%. We then observe a significant improvement in performance as the resolution increases with the accuracy starting to stabilize
+around 92\% and 94\% starting from the 36px resolution. Figure~\ref{fig:cnn_confusion_matrix_100px_std} and Table~\ref{tab:performance_metrics_100px_std}
+show that the overall performances of the model are good, except for the East-African Indian and Indo-Oceanic classes with more moderate performances.
+
+East-African Indian shows a moderate recall of 0.779 and a precision of 0.904, indicating that the model is able to correctly classify
+most of the samples in this class, but it also misclassifies some samples as other classes. The Indo-Oceanic class has a recall of 0.988,
+indicating that the model is able to correctly classify most of the samples in this class, but it has a lower precision of 0.718, indicating
+that the model misclassifies some samples as this class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{../imgs/graphs/standard/cnn_validation_accuracy_groups_mask_5_std.png}
+	\caption{Graph showing the validation accuracy of the CNN model on the different methods at 100px resolution without any preprocessing or
+		balancing techniques applied.}
+	\label{fig:cnn_validation_accuracy_std}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65\textwidth]{../imgs/graphs/standard/cnn_confusion_matrix_100px_mask_5_std-old.png}
+	\caption{Confusion matrix of the CNN model on the images obtained from the Chargaff-Component-Diversity combination at 100px resolution without any
+		preprocessing or balancing techniques applied.}
+	\label{fig:cnn_confusion_matrix_100px_std}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.965              & 0.982           & 0.988                & 0.987             \\
+		East-African Indian & 0.904              & 0.779           & 0.997                & 0.988             \\
+		Euro-American       & 0.987              & 0.974           & 0.976                & 0.975             \\
+		Indo-Oceanic        & 0.718              & 0.988           & 0.985                & 0.985             \\
+		M                   & 0.968              & 0.802           & 0.999                & 0.994             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model on the images obtained from the Chargaff-Component-Diversity combination at 100px resolution without any
+		preprocessing or balancing techniques applied.}
+	\label{tab:performance_metrics_100px_std}
+\end{table}
+
+Overall, this model shows good performance on the imbalanced dataset, but there is still room for improvement. But we will explore different techniques
+to address the class imbalance issue in the following sections.
 
 \section{Mitigating class imbalance}
 \label{sec:mitigating_class_imbalance}
 
 We have multiple ways of addressing the class imbalance issue in our dataset, including:
+
 \begin{itemize}
 	\item Cross validation
 	\item Under-sampling
@@ -301,28 +306,6 @@ We will explore each of these techniques in the following sections and compare t
 Cross validation is a technique used to evaluate the performance of a model by splitting the dataset into multiple subsets, or folds.
 The model is trained on a subset of the data and tested on the remaining data, and this process is repeated for each fold.
 This allows for a more robust evaluation of the model's performance, as it reduces the risk of overfitting to a specific subset of the data.
-\subsubsubsection{K-fold cross validation}
-\label{subsubsec:k_fold_cross_validation}
-
-K-fold cross validation is a specific type of cross validation where the dataset is divided into $k$ equally sized folds. The model is trained
-on $k-1$ folds and tested on the remaining fold, and this process is repeated for each fold. The final performance is averaged over all folds
-to obtain a more reliable estimate of the model's performance. The graphical representation of K-fold cross validation is shown in Figure~\ref{fig:k_fold}.
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.8\textwidth]{../imgs/kfold.png}
-	\caption{How K-fold cross validation works.\textsuperscript{\cite{Raschka-Mirjalili-2017}}}
-	\label{fig:k_fold}
-\end{figure}
-
-
-\subsubsubsection{Stratified K-fold cross validation}
-\label{subsubsec:stratified_k_fold_cross_validation}
-
-Stratified K-fold cross validation is a variation of K-fold cross validation that ensures that each fold has the same proportion of samples
-from each class. This is particularly useful for imbalanced datasets, as it ensures that each fold has a representative sample of each class.
-Even if this method is recommended for imbalanced datasets, we did not have enough time to implement it, so we used the standard K-fold cross
-validation.
 
 \subsubsubsection{Remaking the dataset}
 \label{subsubsec:remaking_dataset}
@@ -331,49 +314,220 @@ During our testing, we realized that we were testing our model with images the m
 split our dataset into a training set and a test set, with 90\% of the samples in the training set and 10\% in the test set. The files are separated
 into two folders to avoid any overlap between the training and test sets.
 
+\subsubsection{Results}
+\label{subsec:results_cross_validation}
+
+During our testing, we used the K-fold cross validation technique with 5 folds with 15 epochs and a batch size of 32. We observed that the model
+was able to achieve a validation accuracy of around 96\% during validation for all of 10 combinations of the metrics at 100px resolution, as shown in
+Figure~\ref{fig:kfold_accuracy}. The confusion matrix in Figure~\ref{fig:kfold_confusion_matrix} shows that the model was able to correctly classify
+most of the samples, with only a few misclassifications.
+
+With Table~\ref{tab:kfold_performance_metrics} we can see that the model has good performance across most classes. Surprisingly enough, the M class,
+which has the least number of samples, has better performance than the East-African Indian class, which has more samples. This suggests that the model
+is able to generalize well to the minority classes, even with the class imbalance issue.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65\textwidth]{../imgs/graphs/kfold/cnn_validation_accuracy_groups_mask_5_kfold_std.png}
+	\caption{Graph showing the validation accuracy of the CNN model with k-fold cross validation applied on the different methods.}
+	\label{fig:kfold_accuracy}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65\textwidth]{../imgs/graphs/kfold/cnn_confusion_matrix_100px_mask_5-kfold_std.png}
+	\caption{Confusion matrix of the CNN model with k-fold cross validation applied on the images obtained from the Chargaff-Component-Diversity
+		combination at 100px resolution.}
+	\label{fig:kfold_confusion_matrix}
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.926              & 0.982           & 0.975                & 0.976             \\
+		East-African Indian & 0.800              & 0.741           & 0.992                & 0.982             \\
+		Euro-American       & 0.988              & 0.955           & 0.979                & 0.963             \\
+		Indo-Oceanic        & 0.758              & 0.962           & 0.988                & 0.987             \\
+		M                   & 0.900              & 0.900           & 0.997                & 0.994             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with k-fold cross validation applied on the images obtained from the Chargaff-Component-Diversity
+		combination at 100px resolution.}
+	\label{tab:kfold_performance_metrics}
+\end{table}
+
+For the mosaic images, we applied the same k-fold cross validation technique with 5 folds and 15 epochs, and we observed similar results compared to the
+individual images. The East-African Indian class has a slightly lower precision but a slightly higher recall, indicating that the model is able to
+correctly classify most of the samples in this class, but it also misclassifies some samples as other classes. The Indo-Oceanic class has a recall of 1.000,
+indicating that the model was able to correctly classify all the samples in this class, but it has a lower precision of 0.684, indicating that the model
+misclassifies some samples as this class. Specificity and accuracy are nearly the same as the individual images, as shown in
+Table~\ref{tab:kfold_performance_metrics_mosaic}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.932              & 0.988           & 0.977                & 0.979             \\
+		East-African Indian & 0.724              & 0.778           & 0.988                & 0.979             \\
+		Euro-American       & 0.995              & 0.945           & 0.992                & 0.962             \\
+		Indo-Oceanic        & 0.684              & 1.000           & 0.982                & 0.982             \\
+		M                   & 0.944              & 0.850           & 0.998                & 0.994             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with k-fold cross validation applied on the mosaic images at 100px resolution.}
+	\label{tab:kfold_performance_metrics_mosaic}
+\end{table}
+
+The performances of the model with cross validation are close to the ones obtained without cross validation. It seems to perform slightly
+better, but the difference is not significant enough to conclude that cross validation improves the performance of the model. However, it is
+important to note that cross validation is a good practice to evaluate the performance of a model, as it reduces the risk of overfitting
+to a specific subset of the data and provides a more robust evaluation of the model's performance.
+
 \subsection{Under-sampling}
 \label{subsec:under_sampling}
 
+Under-sampling is a technique used to address the class imbalance issue by reducing the number of samples in the majority classes. In our
+application, we decided to reduce the number of samples in the Euro-American and East Asian classes to a total of 1000 samples each, while keeping
+the other classes unchanged. This was done to balance the dataset and ensure that the model is not biased towards the majority classes.
+
+\subsubsubsection{Results}
+\label{subsubsec:results_under_sampling}
+
+This time we observe a drop in the validation accuracy of the model (Figure~\ref{fig:under_sampling_accuracy}) compared to the previous results,
+with the accuracy being between 89\% and 93\% for the 100px resolution. There is also a significant drop in the performance of the model
+on the East-African Indian class, while the recall slightly improves, the precision drops significantly, indicating that the model identify
+other classes as East-African Indian. This is likely due to the reduced number of samples in the Euro-American and East Asian classes,
+which may have led to a less representative training set for these classes. It can be seen in Figure~\ref{fig:under_sampling_confusion_matrix}
+and Table~\ref{tab:under_sampling_performance_metrics}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.964              & 0.982           & 0.988                & 0.987             \\
+		East-African Indian & 0.571              & 0.889           & 0.972                & 0.969             \\
+		Euro-American       & 0.998              & 0.936           & 0.996                & 0.957             \\
+		Indo-Oceanic        & 0.765              & 1.000           & 0.988                & 0.988             \\
+		M                   & 0.905              & 0.950           & 0.997                & 0.996             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with under-sampling applied on the images obtained from the Chargaff-Component-Diversity
+		combinations at 100px resolution.}
+	\label{tab:under_sampling_performance_metrics}
+\end{table}
+
+For the mosaic images, we observe an even more significant drop in the precision of the East-African Indian class, which drops to 0.361 from
+0.724 with cross validation on these images (Figure~\ref{tab:under_sampling_performance_metrics_mosaic}). The model misclassifies a lot of
+Euro-American samples as East-African Indian, more than there are actual East-African Indian samples in the dataset
+(Figure~\ref{fig:under_sampling_mosaic_confusion_matrix}).
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.952              & 0.952           & 0.984                & 0.976             \\
+		East-African Indian & 0.361              & 0.815           & 0.940                & 0.935             \\
+		Euro-American       & 0.992              & 0.893           & 0.987                & 0.926             \\
+		Indo-Oceanic        & 0.765              & 1.000           & 0.988                & 0.988             \\
+		M                   & 0.864              & 0.950           & 0.995                & 0.994             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with under-sampling applied on the mosaic images at 100px resolution.}
+	\label{tab:under_sampling_performance_metrics_mosaic}
+\end{table}
+
+Instead of improving the performance of the model like we hoped, under-sampling led to a drop in the performance of the model, especially
+on the East-African Indian class. Still, even with the lowest number of samples, the M class keeps stable metrics.
 
 \subsection{Data augmentation}
 \label{subsec:data_augmentation}
 
-\subsubsubsection{SMOTE}
-\label{subsubsec:smote}
-
-Data augmentation is a technique used to artificially increase the size of a dataset by applying various transformations to the existing data.
-This can help improve the model's performance by providing more diverse training samples and reducing overfitting. in our project, we used SMOTE
-(Synthetic Minority Over-sampling Technique) to generate synthetic samples for the minority classes in our dataset.
-
-SMOTE works by creating new samples by interpolating between existing samples in the feature space. It generates synthetic samples by selecting
-a minority class sample, finding its nearest neighbors, and creating new samples by interpolating between the selected sample and its neighbors.
-This helps to balance the dataset by increasing the number of samples in the minority classes, which can improve the model's performance on those
-classes.
-
-New samples are generated by taking a random sample from the minority class and finding its nearest neighbors in the feature space. The new sample
-is then created by interpolating between the selected sample and its neighbors, as shown in Figure~\ref{fig:smote}. It uses the following formula:
-
-\begin{equation}
-	x_{new} = x_{i} + \lambda (x_{j} - x_{i})
-\end{equation}
-
-where $x_{new}$ is the new sample, $x_{i}$ is the selected sample, $x_{j}$ is one of its nearest neighbors, and $\lambda$ is a random number
-between 0 and 1. This process is repeated until the desired number of samples is generated for the minority class.
-
-\begin{figure}[htbp!]
-	\centering
-	\includegraphics[width=0.7\textwidth]{../imgs/smote.png}
-	\caption{Illustration of the SMOTE algorithm.\textsuperscript{\cite{analyticsvidhya-2020}}}
-	\label{fig:smote}
-\end{figure}
-
 \subsubsubsection{Results}
 \label{subsubsec:results_data_augmentation}
 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.976              & 0.976           & 0.992                & 0.988             \\
+		East-African Indian & 0.759              & 0.815           & 0.989                & 0.982             \\
+		Euro-American       & 0.986              & 0.968           & 0.975                & 0.970             \\
+		Indo-Oceanic        & 0.812              & 1.000           & 0.991                & 0.991             \\
+		M                   & 0.950              & 0.950           & 0.998                & 0.997             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with under-sampling applied on the images obtained from the Chargaff-Component-Diversity
+		combinations at 100px resolution with data augmentation applied on the training set.}
+	\label{tab:augmentation_performance_metrics}
+\end{table}
 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.970              & 0.976           & 0.990                & 0.987             \\
+		East-African Indian & 0.815              & 0.815           & 0.992                & 0.985             \\
+		Euro-American       & 0.993              & 0.970           & 0.987                & 0.976             \\
+		Indo-Oceanic        & 0.722              & 1.000           & 0.985                & 0.985             \\
+		M                   & 0.947              & 0.900           & 0.998                & 0.996             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with under-sampling applied on the mosaic images at 100px resolution with data augmentation
+		applied on the training set.}
+	\label{tab:augmentation_performance_metrics_mosaic}
+\end{table}
 
 \subsection{Combining techniques}
 \label{subsec:combining_techniques}
 
 \subsubsubsection{Results}
 \label{subsubsec:results_combining_techniques}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.953              & 0.970           & 0.984                & 0.981             \\
+		East-African Indian & 0.706              & 0.889           & 0.985                & 0.981             \\
+		Euro-American       & 0.995              & 0.952           & 0.992                & 0.966             \\
+		Indo-Oceanic        & 0.743              & 1.000           & 0.986                & 0.987             \\
+		M                   & 0.950              & 0.950           & 0.998                & 0.997             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with combined under-sampling and data augmentation techniques applied on the images obtained from the
+		Chargaff-Component-Diversity combinations at 100px resolution.}
+	\label{tab:combined_techniques_performance_metrics}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.968              & 0.922           & 0.990                & 0.973             \\
+		East-African Indian & 0.307              & 1.000           & 0.906                & 0.910             \\
+		Euro-American       & 0.995              & 0.864           & 0.992                & 0.909             \\
+		Indo-Oceanic        & 0.839              & 1.000           & 0.992                & 0.993             \\
+		M                   & 0.950              & 0.950           & 0.998                & 0.997             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the CNN model with combined under-sampling and data augmentation techniques applied on the mosaic images at 100px
+		resolution.}
+	\label{tab:combined_techniques_performance_metrics_mosaic}
+\end{table}

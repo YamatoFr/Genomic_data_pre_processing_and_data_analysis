@@ -1,0 +1,118 @@
+\begin{appendices}
+
+	\chapter{Additional Figures}
+	\label{app:additional_figures}
+
+	% ------ kfold cross validation ------
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.65\textwidth]{../imgs/graphs/kfold/cnn_validation_accuracy_kfold_mosaics_line_mask_5_std.png}
+		\caption{Graph showing the validation accuracy of the CNN model with k-fold cross validation applied on the mosaic images.}
+		\label{fig:kfold_accuracy_mosaic}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.65\textwidth]{../imgs/graphs/kfold/cnn_confusion_matrix_kfold_mosaics_100px_mask_5_std.png}
+		\caption{Confusion matrix of the CNN model with k-fold cross validation applied on the mosaic images at 100px resolution.}
+		\label{fig:kfold_confusion_matrix_mosaic}
+	\end{figure}
+
+	% ------ kfold cross validation with under-sampling ------
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_validation_accuracy_groups_mask_5_kfold_undersample.png}
+		\caption{Graph showing the validation accuracy of the CNN model with under-sampling applied on the different methods.}
+		\label{fig:under_sampling_accuracy}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_confusion_matrix_100px_mask_5-kfold_undersample.png}
+		\caption{Confusion matrix of the CNN model with under-sampling applied on the images obtained from the Chargaff-Diversity-NucleScore
+			combination at 100px resolution.}
+		\label{fig:under_sampling_confusion_matrix}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_validation_accuracy_kfold_mosaics_line_mask_5_undersample.png}
+		\caption{Graph showing the validation accuracy of the CNN model with under-sampling applied on the mosaic images.}
+		\label{fig:under_sampling_mosaic_accuracy}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_confusion_matrix_kfold_mosaics_100px_mask_5_undersample.png}
+		\caption{Confusion matrix of the CNN model with under-sampling applied on the mosaic images at 100px resolution.}
+		\label{fig:under_sampling_mosaic_confusion_matrix}
+	\end{figure}
+
+	% ------ kfold cross validation with data augmentation ------
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold/cnn_validation_accuracy_groups_mask_5_kfold_aug.png}
+		\caption{Graph showing the validation accuracy of the CNN model with under-sampling applied on the different methods.}
+		\label{fig:augmentation_accuracy}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold/cnn_confusion_matrix_100px_mask_5-kfold_aug.png}
+		\caption{Confusion matrix of the CNN model with under-sampling applied on the images obtained from the Chargaff-Diversity-NucleScore
+			combination at 100px resolution.}
+		\label{fig:augmentation_confusion_matrix}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold/cnn_validation_accuracy_kfold_mosaics_line_mask_5_aug.png}
+		\caption{Graph showing the validation accuracy of the CNN model with under-sampling applied on the mosaic images.}
+		\label{fig:augmentation_accuracy_mosaic}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold/cnn_confusion_matrix_kfold_mosaics_100px_mask_5_aug.png}
+		\caption{Confusion matrix of the CNN model with under-sampling applied on the mosaic images at 100px resolution.}
+		\label{fig:augmentation_confusion_matrix_mosaic}
+	\end{figure}
+
+	% ------- kfold cross validation with combined techniques -------
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_validation_accuracy_groups_mask_5_kfold_aug-under.png}
+		\caption{Graph showing the validation accuracy of the CNN model with combined under-sampling and data augmentation
+			techniques applied on the different methods.}
+		\label{fig:combined_techniques_accuracy}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_confusion_matrix_100px_mask_5-kfold_aug-under.png}
+		\caption{Confusion matrix of the CNN model with combined under-sampling and data augmentation techniques
+			applied on the images obtained from the Chargaff-Diversity-NucleScore combination at 100px resolution.}
+		\label{fig:combined_techniques_confusion_matrix}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_validation_accuracy_kfold_mosaics_line_mask_5_aug-under.png}
+		\caption{Graph showing the validation accuracy of the CNN model with combined under-sampling and data augmentation
+			techniques applied on the mosaic images.}
+		\label{fig:combined_techniques_accuracy_mosaic}
+	\end{figure}
+
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=0.7\textwidth]{../imgs/graphs/kfold-undersample/cnn_confusion_matrix_kfold_mosaics_100px_mask_5_aug-under.png}
+		\caption{Confusion matrix of the CNN model with combined under-sampling and data augmentation techniques
+			applied on the mosaic images at 100px resolution.}
+		\label{fig:combined_techniques_confusion_matrix_mosaic}
+	\end{figure}
+
+\end{appendices}
