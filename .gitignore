@@ -291,4 +291,5 @@ scripts/img_analysis/mosaics
 scripts/img_analysis/images.zip
 scripts/img_analysis/test-raw
 scripts/img_analysis/train-*
+scripts/img_analysis/arrays
 documents/protein_counts.zip
