@@ -252,7 +252,7 @@ that the model misclassifies some samples as this class.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../imgs/graphs/standard/cnn_validation_accuracy_groups_mask_5_std.png}
-	\caption{Graph showing the validation accuracy of the CNN model on the different methods at 100px resolution without any preprocessing or
+	\caption{Graph showing the validation accuracy of the model on the different methods at 100px resolution without any preprocessing or
 		balancing techniques applied.}
 	\label{fig:cnn_validation_accuracy_std}
 \end{figure}
@@ -260,7 +260,7 @@ that the model misclassifies some samples as this class.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.65\textwidth]{../imgs/graphs/standard/cnn_confusion_matrix_100px_mask_5_std-old.png}
-	\caption{Confusion matrix of the CNN model on the images obtained from the Chargaff-Component-Diversity combination at 100px resolution without any
+	\caption{Confusion matrix of the model on the images obtained from the Chargaff-Component-Diversity combination at 100px resolution without any
 		preprocessing or balancing techniques applied.}
 	\label{fig:cnn_confusion_matrix_100px_std}
 \end{figure}
@@ -278,9 +278,30 @@ that the model misclassifies some samples as this class.
 		M                   & 0.968              & 0.802           & 0.999                & 0.994             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model on the images obtained from the Chargaff-Component-Diversity combination at 100px resolution without any
+	\caption{Performance metrics of the model on the images obtained from the Chargaff-Component-Diversity combination at 100px resolution without any
 		preprocessing or balancing techniques applied.}
 	\label{tab:performance_metrics_100px_std}
+\end{table}
+
+For the mosaic images, we observed similar results, with the model achieving a validation accuracy of around 95\% at 100px resolution. While most of the metrics
+are similar to the individual images, the East-African Indian class improved its recall, the precision dropped to 0.662. This indicates that, while the model is able to
+correctly classify most of the samples in this class, other classes are confused with this class.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{Class}      & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{Accuracy} \\
+		\hline
+		East Asian          & 0.976              & 0.970           & 0.992                & 0.987             \\
+		East-African Indian & 0.662              & 0.858           & 0.982                & 0.977             \\
+		Euro-American       & 0.991              & 0.963           & 0.984                & 0.970             \\
+		Indo-Oceanic        & 0.771              & 0.973           & 0.988                & 0.988             \\
+		M                   & 0.966              & 0.908           & 0.999                & 0.997             \\
+		\hline
+	\end{tabular}
+	\caption{Performance metrics of the model on the mosaic images at 100px resolution without any preprocessing or balancing techniques applied.}
+	\label{tab:performance_metrics_mosaic_std}
 \end{table}
 
 Overall, this model shows good performance on the imbalanced dataset, but there is still room for improvement. But we will explore different techniques
@@ -326,6 +347,13 @@ With Table~\ref{tab:kfold_performance_metrics} we can see that the model has goo
 which has the least number of samples, has better performance than the East-African Indian class, which has more samples. This suggests that the model
 is able to generalize well to the minority classes, even with the class imbalance issue.
 
+For the mosaic images, we applied the same k-fold cross validation technique with 5 folds and 15 epochs, and we observed similar results compared to the
+individual images. The East-African Indian class has a slightly lower precision but a slightly higher recall, indicating that the model is able to
+correctly classify most of the samples in this class, but it also misclassifies some samples as other classes. The Indo-Oceanic class has a recall of 1,
+indicating that the model was able to correctly classify all the samples in this class, but it has a lower precision of 0.684, indicating that the model
+misclassifies some samples as this class. Specificity and accuracy are nearly the same as the individual images, as shown in
+Table~\ref{tab:kfold_performance_metrics_mosaic}.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.65\textwidth]{../imgs/graphs/kfold/cnn_validation_accuracy_groups_mask_5_kfold_std.png}
@@ -354,17 +382,11 @@ is able to generalize well to the minority classes, even with the class imbalanc
 		M                   & 0.900              & 0.900           & 0.997                & 0.994             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with k-fold cross validation applied on the images obtained from the Chargaff-Component-Diversity
+	\caption{Performance metrics with k-fold cross validation applied on the images obtained from the Chargaff-Component-Diversity
 		combination at 100px resolution.}
 	\label{tab:kfold_performance_metrics}
 \end{table}
 
-For the mosaic images, we applied the same k-fold cross validation technique with 5 folds and 15 epochs, and we observed similar results compared to the
-individual images. The East-African Indian class has a slightly lower precision but a slightly higher recall, indicating that the model is able to
-correctly classify most of the samples in this class, but it also misclassifies some samples as other classes. The Indo-Oceanic class has a recall of 1.000,
-indicating that the model was able to correctly classify all the samples in this class, but it has a lower precision of 0.684, indicating that the model
-misclassifies some samples as this class. Specificity and accuracy are nearly the same as the individual images, as shown in
-Table~\ref{tab:kfold_performance_metrics_mosaic}.
 
 \begin{table}[H]
 	\centering
@@ -379,7 +401,7 @@ Table~\ref{tab:kfold_performance_metrics_mosaic}.
 		M                   & 0.944              & 0.850           & 0.998                & 0.994             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with k-fold cross validation applied on the mosaic images at 100px resolution.}
+	\caption{Performance metrics with k-fold cross validation applied on the mosaic images at 100px resolution.}
 	\label{tab:kfold_performance_metrics_mosaic}
 \end{table}
 
@@ -418,7 +440,7 @@ and Table~\ref{tab:under_sampling_performance_metrics}.
 		M                   & 0.905              & 0.950           & 0.997                & 0.996             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with under-sampling applied on the images obtained from the Chargaff-Component-Diversity
+	\caption{Performance metrics with under-sampling applied on the images obtained from the Chargaff-Component-Diversity
 		combinations at 100px resolution.}
 	\label{tab:under_sampling_performance_metrics}
 \end{table}
@@ -441,18 +463,30 @@ Euro-American samples as East-African Indian, more than there are actual East-Af
 		M                   & 0.864              & 0.950           & 0.995                & 0.994             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with under-sampling applied on the mosaic images at 100px resolution.}
+	\caption{Performance metrics with under-sampling applied on the mosaic images at 100px resolution.}
 	\label{tab:under_sampling_performance_metrics_mosaic}
 \end{table}
 
 Instead of improving the performance of the model like we hoped, under-sampling led to a drop in the performance of the model, especially
-on the East-African Indian class. Still, even with the lowest number of samples, the M class keeps stable metrics.
+on the East-African Indian class. Still, even with the lowest number of samples, the M class keeps stable metrics. We're still unsure why
+this is the case, but it could be due to the fact that the M class has a very distinct pattern that the model can pick up on, even with
+a reduced number of samples.
 
 \subsection{Data augmentation}
 \label{subsec:data_augmentation}
 
+For this test, we use the SMOTE-generated images to increase the number of samples in the minority classes, East-African Indian, Indo-Oceanic and M,
+the other classes are kept unchanged. The aforementioned classes are augmented so that the resulting number of samples contains 25\% of generated images
+for each class.
+
 \subsubsubsection{Results}
 \label{subsubsec:results_data_augmentation}
+
+With data augmentation, we once again observe similar behavior for the East-African Indian and Indo-Oceanic classes between the individual and mosaic images.
+The individual images seem to yield a better precision metric for the Indo-Oceanic class (Table~\ref{tab:augmentation_performance_metrics}), while the mosaic
+images favors the East-African Indian class (Table~\ref{tab:augmentation_performance_metrics_mosaic}) in that regard. But this time, those two classes are
+roughly on par with each other, with metrics that are close, if not slightly better than with cross validation. This technique seems to be promising, as it
+allows us to increase the number of samples in the minority classes while keeping the majority classes unchanged.
 
 \begin{table}[H]
 	\centering
@@ -467,7 +501,7 @@ on the East-African Indian class. Still, even with the lowest number of samples,
 		M                   & 0.950              & 0.950           & 0.998                & 0.997             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with under-sampling applied on the images obtained from the Chargaff-Component-Diversity
+	\caption{Performance metrics the images obtained from the Chargaff-Component-Diversity
 		combinations at 100px resolution with data augmentation applied on the training set.}
 	\label{tab:augmentation_performance_metrics}
 \end{table}
@@ -485,8 +519,7 @@ on the East-African Indian class. Still, even with the lowest number of samples,
 		M                   & 0.947              & 0.900           & 0.998                & 0.996             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with under-sampling applied on the mosaic images at 100px resolution with data augmentation
-		applied on the training set.}
+	\caption{Performance metrics the mosaic images at 100px resolution with data augmentation applied on the training set.}
 	\label{tab:augmentation_performance_metrics_mosaic}
 \end{table}
 
@@ -495,6 +528,16 @@ on the East-African Indian class. Still, even with the lowest number of samples,
 
 \subsubsubsection{Results}
 \label{subsubsec:results_combining_techniques}
+
+This time, we combined the under-sampling and data augmentation techniques hoping to get the best results. But, while the results for the individual images
+are similar to the ones obtained from the previous techniques (Table~\ref{tab:combined_techniques_performance_metrics}), the mosaic images show a significant
+drop in the performance of the model (Table~\ref{tab:combined_techniques_performance_metrics_mosaic}). The East-African Indian class has a precision of 0.307,
+which is the worst performance we have seen so far. Once again, the model misclassified a lot of Euro-American samples as East-African Indian, which may be a
+side effect of the combination.
+
+Earlier, we mentioned that we would only present the results for images at 100px resolution for the Chargaff-Component-Diversity combination, but it's worth
+mentioning that, for the individual images, we observed a disparity in validation accuracy between the different combinations. The accuracy ranges from 75\%
+to 82\% at 100px resolution, they are also the lowest accuracy observed for the individual images as shown in Figure~\ref{fig:combined_techniques_accuracy}.
 
 \begin{table}[H]
 	\centering
@@ -509,7 +552,7 @@ on the East-African Indian class. Still, even with the lowest number of samples,
 		M                   & 0.950              & 0.950           & 0.998                & 0.997             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with combined under-sampling and data augmentation techniques applied on the images obtained from the
+	\caption{Performance metrics with combined under-sampling and data augmentation techniques applied on the images obtained from the
 		Chargaff-Component-Diversity combinations at 100px resolution.}
 	\label{tab:combined_techniques_performance_metrics}
 \end{table}
@@ -527,7 +570,7 @@ on the East-African Indian class. Still, even with the lowest number of samples,
 		M                   & 0.950              & 0.950           & 0.998                & 0.997             \\
 		\hline
 	\end{tabular}
-	\caption{Performance metrics of the CNN model with combined under-sampling and data augmentation techniques applied on the mosaic images at 100px
+	\caption{Performance metrics with combined under-sampling and data augmentation techniques applied on the mosaic images at 100px
 		resolution.}
 	\label{tab:combined_techniques_performance_metrics_mosaic}
 \end{table}
