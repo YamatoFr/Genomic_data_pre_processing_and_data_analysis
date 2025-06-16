@@ -27,11 +27,11 @@ different AI techniques that have been used for genomic data analysis, including
 More recently, the authors of \cite{Zhou-et-al-2024} designed a tool based on multiple LLM backends for multi-omics
 analysis with minimal human intervention.
 
-\subsection{Principle}
-\label{subsec:principle_dbscan_hdbscan}
+\section{DBSCAN and HDBSCAN}
+\label{sec:principle_dbscan_hdbscan}
 
-\subsubsubsection{DBSCAN}
-\label{subsubsec:dbscan}
+\subsection*{DBSCAN}
+\label{subsec:dbscan}
 
 DBSCAN works by defining a neighborhood around each point based on a distance metric (usually Euclidean distance) and a
 minimum number of points required to form a dense region. The algorithm proceeds as follows:
@@ -43,8 +43,8 @@ minimum number of points required to form a dense region. The algorithm proceeds
 	\item Points that do not belong to any cluster are classified as noise.
 \end{enumerate}
 
-\subsubsubsection{HDBSCAN}
-\label{subsubsec:hdbscan}
+\subsection*{HDBSCAN}
+\label{subsec:hdbscan}
 
 HDBSCAN builds on the principles of DBSCAN by introducing a hierarchical clustering approach. It is more robust to varying
 densities and can identify clusters of different shapes and sizes. The algorithm works as follows:
@@ -80,8 +80,8 @@ The convolutional layers learn to extract features from the input data, while th
 or regression task. The training process involves optimizing the weights of the filters and fully connected layers using backpropagation
 and a loss function, such as cross-entropy for classification tasks.
 
-\subsubsubsection{K-fold cross validation}
-\label{subsubsec:k_fold_cross_validation}
+\section{K-fold cross validation}
+\label{sec:k_fold_cross_validation}
 
 K-fold cross validation is a specific type of cross validation where the dataset is divided into $k$ equally sized folds. The model is trained
 on $k-1$ folds and tested on the remaining fold, and this process is repeated for each fold. The final performance is averaged over all folds
@@ -94,16 +94,16 @@ to obtain a more reliable estimate of the model's performance. The graphical rep
 	\label{fig:k_fold}
 \end{figure}
 
-\subsubsubsection{Stratified K-fold cross validation}
-\label{subsubsec:stratified_k_fold_cross_validation}
+\subsubsection{Stratified K-fold cross validation}
+\label{subsec:stratified_k_fold_cross_validation}
 
 Stratified K-fold cross validation is a variation of K-fold cross validation that ensures that each fold has the same proportion of samples
 from each class. This is particularly useful for imbalanced datasets, as it ensures that each fold has a representative sample of each class.
 Even if this method is recommended for imbalanced datasets, we did not have enough time to implement it, so we used the standard K-fold cross
 validation.
 
-\subsubsubsection{SMOTE}
-\label{subsubsec:smote}
+\section{SMOTE}
+\label{sec:smote}
 
 Data augmentation is a technique used to artificially increase the size of a dataset by applying various transformations to the existing data.
 This can help improve the model's performance by providing more diverse training samples and reducing overfitting. In our project, we used SMOTE

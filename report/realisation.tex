@@ -1,8 +1,5 @@
-\chapter{Problem Statement}
-\label{chap:problem_statement}
-
-\section{Context}
-\label{sec:context}
+\chapter{Context}
+\label{chap:context}
 
 
 
@@ -23,7 +20,7 @@ The following tools and technologies were used to develop the algorithms and doc
 	      model selection, and evaluation.
 	\item \textbf{Pandas}: a Python library for data manipulation and analysis, providing data structures and functions for working with
 	      structured data.
-	\item \textbf{Matplotlib}: a Python library for graphics and data visualization.
+	\item \textbf{Matplotlib}: a Python library for graphics and data visualization, including 3D plotting capabilities.
 	\item \LaTeX : a typesetting system used for writing technical and scientific documents.
 	\item A personal computer running Windows 11 with a \textbf{Ryzen 7 6800H} processor and \textbf{32 GB} of RAM.
 \end{itemize}
@@ -32,24 +29,26 @@ The following tools and technologies were used to develop the algorithms and doc
 \label{sec:objectives}
 
 The main objective of this project is to explore and analyze genomic data, specifically the genomes of Tuberculosis (TB) strains, to
-identify patterns and relationships between different strains.
+identify patterns and relationships between different strains. As well as to apply various data mining and data analysis techniques,
+but also develop new methods and compare their performance to existing methods.
 
 \chapter{Genomic data}
 \label{chap:genomic_data}
 
-Genomic data refers to the information contained in the DNA of an organism, which includes the sequences of nucleotides (A, T, C, G).
-These are gathered through various methods, such as DNA sequencing, and can be used to study the genetic makeup of organisms,
-identify genetic variations, and understand the relationships between different species. The Institute Pasteur has a large collection
-of genomic data, including the genomes of various strains of Tuberculosis (TB), which is a major public health concern worldwide.
+Genomic data refers to the information contained in the DNA of an organism, which includes the sequences of nucleotides (Adenine, Thymine,
+Cytosine, and Guanine). These are gathered through various methods, such as DNA sequencing, and can be used to study the genetic makeup
+of organisms, identify genetic variations, and understand the relationships between different species. The Institute Pasteur has a large
+collection of genomic data, including the genomes of various strains of Tuberculosis (TB), which is a major public health concern worldwide.
 
 \section{The FASTA format}
 \label{sec:fasta_format}
 
-The FASTA format is a text-based format for representing nucleotide or protein sequences. It is widely used in bioinformatics
+The FASTA format is a text-based format for representing nucleotide or protein
+sequences~\textsuperscript{\cite{fasta-format-genbank,wikipedia-fasta-format-2025}}. It is widely used in bioinformatics
 to store and exchange sequence data. A FASTA file consists of one or more sequences, each represented by a header line starting with
-a greater-than symbol (\texttt{>}), followed by the sequence itself on the next line. The header line can contain additional
-information about the sequence, such as its identifier, description, or source. An example of a FASTA file is shown in
-Figure~\ref{fig:fasta_example}.
+a greater-than symbol (\texttt{>}), followed by the sequence itself on the next line. The sequence codes for a protein who then codes for a
+gene. The header line can contain additional information about the sequence, such as its identifier, description, or source. An example of a
+FASTA file is shown in Figure~\ref{fig:fasta_example}.
 
 \begin{center}
 	\begin{figure}[H]
@@ -151,7 +150,7 @@ different preprocessing step to improve the clustering results. We will explore 
 \section{New Approach using DBSCAN and HDBSCAN}
 \label{subsec:new_approach_dbscan_hdbscan}
 
-To address the limitations of K-means clustering, we explored alternative clustering algorithms, specifically
+To address the poor clustering results obtained with K-means, we explored alternative clustering algorithms, specifically
 \textbf{DBSCAN} and \textbf{HDBSCAN}.
 
 DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is a density-based clustering algorithm that
@@ -233,6 +232,14 @@ are not informative enough.
 \chapter{Using CNNs to identify TB Strains}
 \label{chap:cnn_tb_strains}
 
+The clustering approach did not yield satisfactory results, so we decided to explore a different approach by converting the genomic
+data into images. This approach allows us to leverage the power of Convolutional Neural Networks (CNNs) to classify the images and
+identify the TB strains. These images are generated from the genomic data by applying various metrics to the nucleotide sequences,
+which are then converted into pixel values. The resulting images can be used to train a CNN to classify the TB strains based on their
+genomic data. This approach has the potential to improve the classification accuracy and provide a more robust method for identifying
+TB strains.
+
+
 \section{Building the dataset}
 \label{sec:building_dataset}
 
@@ -279,7 +286,8 @@ classes:
 \end{itemize}
 
 We also made mosaic images by combining the corresponding images from each combination of metrics resulting in a 5x2 grid rectangular image as shown
-in Figure~\ref{fig:mosaic_example}.
+in Figure~\ref{fig:mosaic_example}. We chose to a 5x2 grid because it creates complete images without any empty pixels, which is important for the
+training of the CNN. The images are also resized to a 20x50px resolution for training.
 
 \begin{figure}[H]
 	\centering
@@ -310,7 +318,7 @@ Composition and Diversity metrics at 100px resolution, for the mosaic images we 
 \subsubsection{Results}
 \label{subsubsec:results_initial_testing}
 
-As shown in Figure~\ref{fig:cnn_validation_accuracy_std}, the 4px images yielded the worst performance, with a validation accuracy between 67\%
+As shown in Figure~\ref{fig:cnn_validation_accuracy_std}, the 4px images yielded the worst performance, with a validation accuracy between 66\%
 and 76\%. We then observe a significant improvement in performance as the resolution increases with the accuracy starting to stabilize
 around 92\% and 94\% starting from the 36px resolution. Figure~\ref{fig:cnn_confusion_matrix_100px_std} and Table~\ref{tab:performance_metrics_100px_std}
 show that the overall performances of the model are good, except for the East-African Indian and Indo-Oceanic classes with more moderate performances.
@@ -358,7 +366,7 @@ For the mosaic images, we observed similar results, with the model achieving a v
 are similar to the individual images, the East-African Indian class improved its recall, the precision dropped to 0.662. This indicates that, while the model is able to
 correctly classify most of the samples in this class, other classes are confused with this class.
 
-\begin{table}
+\begin{table}[H]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
@@ -645,3 +653,23 @@ to 82\% at 100px resolution, they are also the lowest accuracy observed for the 
 		resolution.}
 	\label{tab:combined_techniques_performance_metrics_mosaic}
 \end{table}
+
+\section{Comparing the results}
+\label{sec:comparing_results}
+
+We first ran the CNN model on the dataset without any preprocessing or balancing techniques applied, and we observed that the model was
+able to achieve a validation accuracy of between 92\% and 94\% at 100px resolution. However, this model was trained and tested on the same
+dataset, which means that the model may be biased. The dataset was also highly imbalanced, with some classes having significantly more
+samples than others.
+
+After splitting the dataset into a training set and a test set, we applied k-fold cross validation which yielded decent results. But
+the East-African Indian and Indo-Oceanic classes had lower precision and recall metrics compared to the other classes, except for the
+Indo-Oceanic class which had a recall of 1 with the mosaic images. Then we tried under-sampling the dataset, which led to a drop in
+the performance for both individual and mosaic images. Data augmentation was then applied to the dataset, which allowed us to
+increase the number of samples in the minority classes. This led to better performance for the Indo-Oceanic class with the individual
+images, while the East-African Indian class had a better performance with the mosaic images. Finally, we combined under-sampling
+and data augmentation techniques, which led to a drop in the performance of the model for the mosaic images, while the individual images
+remained stable.
+
+Overall, the best results were obtained with SMOTE data augmentation, which allowed us to increase the number of samples in the minority
+classes while keeping the majority classes unchanged.
