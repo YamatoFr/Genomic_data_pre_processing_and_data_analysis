@@ -4,6 +4,8 @@
 \section{Context}
 \label{sec:context}
 
+
+
 \section{Work Environment}
 \label{sec:work_environment}
 
@@ -19,12 +21,18 @@ The following tools and technologies were used to develop the algorithms and doc
 	      visualization.
 	\item \textbf{Sklearn}: a Python library for machine learning that provides various algorithms and tools for data preprocessing,
 	      model selection, and evaluation.
+	\item \textbf{Pandas}: a Python library for data manipulation and analysis, providing data structures and functions for working with
+	      structured data.
+	\item \textbf{Matplotlib}: a Python library for graphics and data visualization.
 	\item \LaTeX : a typesetting system used for writing technical and scientific documents.
 	\item A personal computer running Windows 11 with a \textbf{Ryzen 7 6800H} processor and \textbf{32 GB} of RAM.
 \end{itemize}
 
 \section{Objectives}
 \label{sec:objectives}
+
+The main objective of this project is to explore and analyze genomic data, specifically the genomes of Tuberculosis (TB) strains, to
+identify patterns and relationships between different strains.
 
 \chapter{Genomic data}
 \label{chap:genomic_data}
@@ -71,11 +79,10 @@ with many bioinformatics tools and software, allowing for easy analysis and mani
 \section{Preprocessing Genomic Data}
 \label{sec:preprocessing_genomic_data}
 
-Our data is a collection of Tuberculosis (TB) genomes, where each file contains the proteins and their respective
-nucleotide sequences in FASTA format, for a total of 7057 files.
-TODO: parler de l'institut Pasteur?
-The goal is to cluster these genomes based on their protein sequences and find ways to distinguish between different
-TB strains.
+Our data is a collection of Tuberculosis (TB) genomes, where each file contains the proteins and their respective nucleotide sequences
+in FASTA format, for a total of 7057 files. These genomes were obtained from the \textbf{Institut Pasteur} and are part of the
+\textbf{Mycobacterium tuberculosis complex} (MTBC), which is a group of closely related bacteria that cause TB. The goal is to cluster
+these genomes based on their protein sequences and find ways to distinguish between different TB strains.
 
 We started by creating a dataset containing the number of times each protein appears in each genome. This was done by
 parsing the FASTA files and counting the occurrences of each protein sequence, we then removed the outliers, namely
@@ -97,18 +104,49 @@ score.
 \label{subsec:first_results}
 
 The initial results showed that the silhouette score was highest for $k=9$, indicating that this was the optimal number of clusters.
-However, the clusters were not well separated, or some points are alone in their cluster, as seen in Figure {TODO:figure:clusters_k9}.
+However, the clusters were not well separated, or some points are alone in their cluster, as seen in Figure~\ref{fig:clusters_k9_pca}.
 Which suggests that the data may not be well suited for clustering with K-means, or that the features used for clustering are not
-informative enough.
+informative enough. We also tried without applying PCA but achieved similar results, we also observed fewer clusters, as seen in
+Figure~\ref{fig:clusters_k9_no_PCA}.
 
-TODO: figure clusters_k9
+After reviewing the data, we found that there is significant overlap between the points, so we switched to 3D visualization to better
+understand the clusters. With Figure~\ref{fig:clusters_k9_pca_3d} and Figure~\ref{fig:clusters_k9_no_PCA_3d}, we can see that the
+clusters are still not well separated, but we can conclude that a 2D space was not appropriate for visualizing the clusters.
 
-We also tried without applying PCA but achieved similar results, we also observed fewer points than expected as seen in
-Figure {TODO:figure:clusters_k9_no_PCA}, after reviewing the data, we found that there is significant overlap between the points.
+These results suggest that K-means clustering may not be the best approach for this dataset, or that the data may need further or a
+different preprocessing step to improve the clustering results. We will explore alternative clustering algorithms in the next section.
 
-TODO: figure clusters_k9_no_PCA
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/cluster_pca.png}
+		\caption{Clusters obtained with K-means clustering after applying PCA.}
+		\label{fig:clusters_k9_pca}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/cluster_pca_3d.png}
+		\caption{Clusters obtained with K-means clustering after applying PCA in 3D.}
+		\label{fig:clusters_k9_pca_3d}
+	\end{minipage}
+\end{figure}
 
-So we switched to 3D visualization to better understand the clusters,
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/cluster_nopca.png}
+		\caption{Clusters obtained with K-means clustering without applying PCA.}
+		\label{fig:clusters_k9_no_PCA}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/cluster_nopca_3d.png}
+		\caption{Clusters obtained with K-means clustering without applying PCA in 3D.}
+		\label{fig:clusters_k9_no_PCA_3d}
+	\end{minipage}
+\end{figure}
 
 \section{New Approach using DBSCAN and HDBSCAN}
 \label{subsec:new_approach_dbscan_hdbscan}
@@ -124,40 +162,73 @@ HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Nois
 a hierarchy of clusters and allows for more flexible clustering by varying the density threshold. It can also handle varying
 cluster shapes and sizes.
 
-\subsection{Principle}
-\label{subsec:principle_dbscan_hdbscan}
-
-\subsubsubsection{DBSCAN}
-\label{subsubsec:dbscan}
-
-DBSCAN works by defining a neighborhood around each point based on a distance metric (usually Euclidean distance) and a
-minimum number of points required to form a dense region. The algorithm proceeds as follows:
-
-\begin{enumerate}
-	\item For each point in the dataset, find its neighbors within a specified radius $\varepsilon$.
-	\item If the number of neighbors is greater than or equal to the minimum number of points, a new cluster is formed.
-	\item The algorithm recursively expands the cluster by including all points that are reachable from the initial point.
-	\item Points that do not belong to any cluster are classified as noise.
-\end{enumerate}
-
-\subsubsubsection{HDBSCAN}
-\label{subsubsec:hdbscan}
-
-HDBSCAN builds on the principles of DBSCAN by introducing a hierarchical clustering approach. It is more robust to varying
-densities and can identify clusters of different shapes and sizes. The algorithm works as follows:
-
-\begin{enumerate}
-	\item Compute the mutual reachability distance between points, which takes into account the distance to the nearest neighbor.
-	\item Build a minimum spanning tree (MST) based on the mutual reachability distances.
-	\item Extract clusters from the MST by varying the density threshold, resulting in a hierarchy of clusters.
-	\item Assign points to clusters based on their membership in the hierarchy, allowing for flexible clustering.
-\end{enumerate}
-
 \subsection{Results}
 \label{subsec:results_dbscan_hdbscan}
 
+During our testing, we applied both DBSCAN and HDBSCAN with an epsilon value of 1 and a minimum number of samples of 5.
+These techniques were both applied to the dataset with and without PCA. We can see from Figure~\ref{fig:clusters_dbscan_no_pca}
+to Figure~\ref{fig:clusters_hdbscan_pca_3d} that the clusters obtained with DBSCAN and HDBSCAN are more just a bit more
+discernible than those obtained with K-means clustering. But the clusters are still closely packed together, we can conclude
+that the problem lies with the way the dataset was created. A similar observation can be made when not applying PCA, as shown
+in Figure~\ref{fig:clusters_dbscan_no_pca} to Figure~\ref{fig:clusters_hdbscan_no_pca_3d} in the appendix.
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/dbscan_pca.png}
+		\caption{Clusters obtained with DBSCAN after applying PCA.}
+		\label{fig:clusters_dbscan_pca}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/dbscan_pca_3d.png}
+		\caption{Clusters obtained with DBSCAN after applying PCA in 3D.}
+		\label{fig:clusters_dbscan_pca_3d}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/hdbscan_pca.png}
+		\caption{Clusters obtained with DBSCAN after applying PCA.}
+		\label{fig:clusters_hdbscan_pca}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/hdbscan_pca_3d.png}
+		\caption{Clusters obtained with DBSCAN after applying PCA in 3D.}
+		\label{fig:clusters_hdbscan_pca_3d}
+	\end{minipage}
+\end{figure}
+
 \section{Trying an autoencoder}
 \label{sec:autoencoder}
+
+To further explore the clustering of the genomic data, we decided to try an autoencoder. After getting the embeddings from the autoencoder,
+we applied the K-means clustering algorithm to the encoded data. We can see in Figure~\ref{fig:clusters_autoencoder} and
+Figure~\ref{fig:clusters_autoencoder_3d} that the clusters obtained with K-means clustering on the encoded data are more discernible
+than those obtained with K-means clustering on the original data. However, we observe a great intra-cluster distance, which suggests that the
+autoencoder may not have learned a good representation of the data, that the data is not well suited, or that the features used for clustering
+are not informative enough.
+
+\begin{figure}[H]
+	\centering
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/kmeans_autoencoder.png}
+		\caption{Clusters obtained with K-means clustering on the encoded data.}
+		\label{fig:clusters_autoencoder}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=0.95\textwidth]{../imgs/graphs/clustering/kmeans_autoencoder_3d.png}
+		\caption{Clusters obtained with K-means clustering on the encoded data in 3D.}
+		\label{fig:clusters_autoencoder_3d}
+	\end{minipage}
+\end{figure}
 
 \chapter{Using CNNs to identify TB Strains}
 \label{chap:cnn_tb_strains}
@@ -207,8 +278,8 @@ classes:
 	\item \textbf{Indo-Oceanic} with 259 samples.
 \end{itemize}
 
-We also made mosaic images by combining the corresponding images from each combination of metrics resulting in a 5x2 grid resulting in a
-rectangular image as shown in Figure~\ref{fig:mosaic_example}.
+We also made mosaic images by combining the corresponding images from each combination of metrics resulting in a 5x2 grid rectangular image as shown
+in Figure~\ref{fig:mosaic_example}.
 
 \begin{figure}[H]
 	\centering

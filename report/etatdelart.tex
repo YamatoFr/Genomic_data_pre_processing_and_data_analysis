@@ -27,6 +27,35 @@ different AI techniques that have been used for genomic data analysis, including
 More recently, the authors of \cite{Zhou-et-al-2024} designed a tool based on multiple LLM backends for multi-omics
 analysis with minimal human intervention.
 
+\subsection{Principle}
+\label{subsec:principle_dbscan_hdbscan}
+
+\subsubsubsection{DBSCAN}
+\label{subsubsec:dbscan}
+
+DBSCAN works by defining a neighborhood around each point based on a distance metric (usually Euclidean distance) and a
+minimum number of points required to form a dense region. The algorithm proceeds as follows:
+
+\begin{enumerate}
+	\item For each point in the dataset, find its neighbors within a specified radius $\varepsilon$.
+	\item If the number of neighbors is greater than or equal to the minimum number of points, a new cluster is formed.
+	\item The algorithm recursively expands the cluster by including all points that are reachable from the initial point.
+	\item Points that do not belong to any cluster are classified as noise.
+\end{enumerate}
+
+\subsubsubsection{HDBSCAN}
+\label{subsubsec:hdbscan}
+
+HDBSCAN builds on the principles of DBSCAN by introducing a hierarchical clustering approach. It is more robust to varying
+densities and can identify clusters of different shapes and sizes. The algorithm works as follows:
+
+\begin{enumerate}
+	\item Compute the mutual reachability distance between points, which takes into account the distance to the nearest neighbor.
+	\item Build a minimum spanning tree (MST) based on the mutual reachability distances.
+	\item Extract clusters from the MST by varying the density threshold, resulting in a hierarchy of clusters.
+	\item Assign points to clusters based on their membership in the hierarchy, allowing for flexible clustering.
+\end{enumerate}
+
 \section{Introduction to CNNs}
 \label{sec:intro_cnn}
 
