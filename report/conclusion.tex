@@ -1,3 +1,26 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
+During this project, we have explored various techniques for genomic data pre-processing and analysis, focusing on the Mycobacterium tuberculosis (MTB)
+genome. We have implemented several methods for data pre-processing and analysis, such as K-means clustering, DBSCAN, HDBSCAN and an autoencoder.
+However, we encountered several challenges, particularly with the clustering methods, which did not yield satisfactory results. We theorized that,
+either the data was not suitable for clustering due to its high dimensionality, or that they were not prepared correctly.
+
+We also explored the use of Convolutional Neural Networks (CNNs) for image classification, which showed promising results. The images were generated
+from the genomic data by applying a combination of three of five metrics to the nucleotide sequences, resulting in ten different combinations of metrics,
+each represented by a different color channel in the image. We also created a dataset of mosaic images, combining the images from the ten different
+combinations of metrics.
+
+The resulting dataset was highly imbalanced, with a significant number of samples belonging to two of the fives classes,
+Euro-American and East-Asian. To address this issue, we applied different techniques such as K-fold cross validation, under-sampling, data augmentation
+using SMOTE, and a combination of both under-sampling and data augmentation. The best results were achieved with the data augmentation technique,
+which improved the metrics for the Indo-Oceanic class on the individual images, and the East-African Indian class on the mosaic images.
+
+Another behavior we observed was that, despite being the class with the lowest number of samples, the M class always had metrics on par or close to the
+majority classes. This suggests that the M class has a specific pattern that is distinct from the other classes, which could be further investigated
+in future work.
+
+In conclusion, this project has provided valuable insights into the challenges and opportunities of genomic data pre-processing and analysis.
+We have demonstrated the potential of using CNNs for image classification of genomic data, and the importance of addressing class imbalance
+in the dataset. I personally learned a lot about the fields of genomics and bioinformatics. This project has been a great opportunity to apply
+my knowledge in machine learning and data analysis to a real-world problem.

@@ -27,13 +27,36 @@ different AI techniques that have been used for genomic data analysis, including
 More recently, the authors of \cite{Zhou-et-al-2024} designed a tool based on multiple LLM backends for multi-omics
 analysis with minimal human intervention.
 
+\section{Damerau-Levenshtein distance}
+\label{sec:damerau-levenshtein-distance}
+
+The \textbf{Damerau-Levenshtein distance} is a string metric for measuring the edit distance between two sequences.
+This distance is named after Frederick J. Damerau and Vladimir I. Levenshtein, who independently introduced it in the
+1960s~\textsuperscript{\cite{Levenshtein-1966}}. It is a variation of the Levenshtein distance that allows for the
+transposition of two adjacent characters in addition to the standard operations of insertion, deletion, and substitution.
+The distance is defined as the minimum number of edit operations required to transform one sequence into another.
+The operations are:
+
+\begin{itemize}
+	\item \textbf{Insertion}: Adding a character to the sequence.
+	\item \textbf{Deletion}: Removing a character from the sequence.
+	\item \textbf{Substitution}: Replacing one character with another.
+	\item \textbf{Transposition}: Swapping two adjacent characters.
+\end{itemize}
+
+We tried to integrate the Damerau-Levenshtein distance in our clustering attempts, but did not manage to do so
+successfully. The main issues were time and resource constraints, as the algorithm is computationally expensive,
+especially for large datasets.
+
 \section{DBSCAN and HDBSCAN}
 \label{sec:principle_dbscan_hdbscan}
 
 \subsection*{DBSCAN}
 \label{subsec:dbscan}
 
-DBSCAN works by defining a neighborhood around each point based on a distance metric (usually Euclidean distance) and a
+\textbf{DBSCAN (Density-Based Spatial Clustering of Applications with Noise)} is a popular clustering algorithm proposed
+by Martin Ester, Hans-Peter Kriegel, Jörg Sander, and Xiaowei Xu in 1996~\textsuperscript{\cite{Ester-et-al-1996}}.
+It works by defining a neighborhood around each point based on a distance metric (usually Euclidean distance) and a
 minimum number of points required to form a dense region. The algorithm proceeds as follows:
 
 \begin{enumerate}
@@ -46,8 +69,11 @@ minimum number of points required to form a dense region. The algorithm proceeds
 \subsection*{HDBSCAN}
 \label{subsec:hdbscan}
 
-HDBSCAN builds on the principles of DBSCAN by introducing a hierarchical clustering approach. It is more robust to varying
-densities and can identify clusters of different shapes and sizes. The algorithm works as follows:
+\textbf{HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise)} is an extension of DBSCAN
+proposed by Ricardo J. G. Campello, David Moulavi, and Jörg Sander in 2013~\textsuperscript{\cite{Campello-et-al-2013}},
+then further developed with Arthur Zimek in 2015~\textsuperscript{\cite{Campello-et-al-2015}}. It builds on the principles
+of DBSCAN by introducing a hierarchical clustering approach. It is more robust to varying densities and can identify clusters
+of different shapes and sizes. The algorithm works as follows:
 
 \begin{enumerate}
 	\item Compute the mutual reachability distance between points, which takes into account the distance to the nearest neighbor.
@@ -59,14 +85,13 @@ densities and can identify clusters of different shapes and sizes. The algorithm
 \section{Introduction to CNNs}
 \label{sec:intro_cnn}
 
-The fundamental idea behind \textbf{Convolutional Neural Networks (CNNs)} was introduced by Kunihiko Fukushima\textsuperscript{\cite{Fukushima-1987}}
-in 1980 and later popularized by Yann LeCun in the 1990s with the LeNet architecture\textsuperscript{\cite{Lecun-et-al-1998}}. CNNs are a class of
+The fundamental idea behind \textbf{Convolutional Neural Networks (CNNs)} was introduced by Kunihiko Fukushima~\textsuperscript{\cite{Fukushima-1987}}
+in 1980 and later popularized by Yann LeCun in the 1990s with the LeNet architecture~\textsuperscript{\cite{Lecun-et-al-1998}}. CNNs are a class of
 deep learning models specifically designed for processing structured grid data, such as images. They are particularly effective for
 tasks like image classification, object detection, and segmentation.
 
 CNNs work by applying convolutional filters to the input data, which allows them to learn spatial hierarchies of features.
-It shares some similarities with the more conventional neural networks, but there is at least two different types
-of layers that are specific to CNNs:
+It shares some similarities with the more conventional neural networks, but there are at least two types of layers that are specific to CNNs:
 
 \begin{itemize}
 	\item \textbf{Convolutional layers}: These layers apply convolutional filters to the input data, extracting local features
@@ -87,19 +112,19 @@ K-fold cross validation is a specific type of cross validation where the dataset
 on $k-1$ folds and tested on the remaining fold, and this process is repeated for each fold. The final performance is averaged over all folds
 to obtain a more reliable estimate of the model's performance. The graphical representation of K-fold cross validation is shown in Figure~\ref{fig:k_fold}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../imgs/kfold.png}
-	\caption{How K-fold cross validation works.\textsuperscript{\cite{Raschka-Mirjalili-2017}}}
+	\caption{How K-fold cross validation works.~\textsuperscript{\cite{Raschka-Mirjalili-2017}}}
 	\label{fig:k_fold}
 \end{figure}
 
-\subsubsection{Stratified K-fold cross validation}
+\subsubsection*{Stratified K-fold cross validation}
 \label{subsec:stratified_k_fold_cross_validation}
 
 Stratified K-fold cross validation is a variation of K-fold cross validation that ensures that each fold has the same proportion of samples
 from each class. This is particularly useful for imbalanced datasets, as it ensures that each fold has a representative sample of each class.
-Even if this method is recommended for imbalanced datasets, we did not have enough time to implement it, so we used the standard K-fold cross
+Although if this method is recommended for imbalanced datasets, we did not have enough time to implement it, so we used the standard K-fold cross
 validation.
 
 \section{SMOTE}
@@ -124,9 +149,9 @@ is then created by interpolating between the selected sample and its neighbors, 
 Where $x_{new}$ is the new sample, $x_{i}$ is the selected sample, $x_{j}$ is one of its nearest neighbors, and $\lambda$ is a random number
 between 0 and 1. This process is repeated until the desired number of samples is generated for the minority class.
 
-\begin{figure}[htbp!]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../imgs/smote.png}
-	\caption{Illustration of the SMOTE algorithm.\textsuperscript{\cite{analyticsvidhya-2020}}}
+	\caption{Illustration of the SMOTE algorithm.~\textsuperscript{\cite{analyticsvidhya-2020}}}
 	\label{fig:smote}
 \end{figure}

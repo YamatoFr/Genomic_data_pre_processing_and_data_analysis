@@ -1,14 +1,20 @@
 \chapter{Context}
 \label{chap:context}
 
+\section{Laboratoire de Mathématiques Informatique et Applications (LAMIA)}
+\label{sec:lamia}
 
+This project was done within the framework of the Master 2 Computer Science program at the
+\textbf{Laboratoire de Mathématiques Informatique et Applications (LAMIA)} of the \textbf{Université des Antilles}.
+The LAMIA is a research laboratory that is part of the Université des Antilles and is located in Guadeloupe. It focuses on the
+intersection of mathematics, computer science, and their applications in various fields, including data science,
+machine learning, and artificial intelligence. LAMIA conducts research that aims to advance theoretical understanding
+and practical applications of mathematical and computational methods.
 
 \section{Work Environment}
 \label{sec:work_environment}
 
-This project was done within the framework of the Master 2 Computer Science program at the
-\textbf{Laboratoire de Mathématiques Informatique et Applications (LAMIA)} of the \textbf{Université des Antilles}.
-The following tools and technologies were used to develop the algorithms and document the project:
+The following tools and technologies were used to develop algorithms and document the project:
 
 \begin{itemize}
 	\item \textbf{Python}: a programming language widely used in scientific computing, data analysis, and machine learning.
@@ -25,6 +31,9 @@ The following tools and technologies were used to develop the algorithms and doc
 	\item A personal computer running Windows 11 with a \textbf{Ryzen 7 6800H} processor and \textbf{32 GB} of RAM.
 \end{itemize}
 
+This internship was conducted within the office of the LAMIA with other students, which allowed for collaboration and
+sharing of ideas and resources.
+
 \section{Objectives}
 \label{sec:objectives}
 
@@ -39,6 +48,16 @@ Genomic data refers to the information contained in the DNA of an organism, whic
 Cytosine, and Guanine). These are gathered through various methods, such as DNA sequencing, and can be used to study the genetic makeup
 of organisms, identify genetic variations, and understand the relationships between different species. The Institute Pasteur has a large
 collection of genomic data, including the genomes of various strains of Tuberculosis (TB), which is a major public health concern worldwide.
+
+\section{Institut Pasteur}
+\label{sec:institut_pasteur}
+
+The Institut Pasteur is a renowned research institute located in Paris, France, dedicated to the study of biology,
+microorganisms, diseases, and vaccines. Founded in 1887 by Louis Pasteur, the institute has played a pivotal role
+in the development of modern microbiology and immunology. It is known for its contributions to the understanding of
+infectious diseases and the development of vaccines, including those for rabies and tuberculosis. Founded by
+Louis Pasteur in 1887, the Institut Pasteur has been at the forefront of scientific research and innovation for over
+a century.
 
 \section{The FASTA format}
 \label{sec:fasta_format}
@@ -103,9 +122,9 @@ score.
 \label{subsec:first_results}
 
 The initial results showed that the silhouette score was highest for $k=9$, indicating that this was the optimal number of clusters.
-However, the clusters were not well separated, or some points are alone in their cluster, as seen in Figure~\ref{fig:clusters_k9_pca}.
-Which suggests that the data may not be well suited for clustering with K-means, or that the features used for clustering are not
-informative enough. We also tried without applying PCA but achieved similar results, we also observed fewer clusters, as seen in
+However, the clusters were not well separated, or some points are isolated in their cluster, as seen in Figure~\ref{fig:clusters_k9_pca},
+which suggests that the data may not be well suited for clustering with K-means, or that the features used for clustering are not
+informative enough. We also tried without applying PCA but achieved similar results. We also observed fewer clusters, as seen in
 Figure~\ref{fig:clusters_k9_no_PCA}.
 
 After reviewing the data, we found that there is significant overlap between the points, so we switched to 3D visualization to better
@@ -209,9 +228,8 @@ in Figure~\ref{fig:clusters_dbscan_no_pca} to Figure~\ref{fig:clusters_hdbscan_n
 To further explore the clustering of the genomic data, we decided to try an autoencoder. After getting the embeddings from the autoencoder,
 we applied the K-means clustering algorithm to the encoded data. We can see in Figure~\ref{fig:clusters_autoencoder} and
 Figure~\ref{fig:clusters_autoencoder_3d} that the clusters obtained with K-means clustering on the encoded data are more discernible
-than those obtained with K-means clustering on the original data. However, we observe a great intra-cluster distance, which suggests that the
-autoencoder may not have learned a good representation of the data, that the data is not well suited, or that the features used for clustering
-are not informative enough.
+than those obtained with K-means clustering on the original data. However, we observe a great intra-cluster distance, which suggests that
+the autoencoder may not have learned a good data representation, or that the dataset or features were not well suited for clustering.
 
 \begin{figure}[H]
 	\centering
@@ -234,38 +252,41 @@ are not informative enough.
 
 The clustering approach did not yield satisfactory results, so we decided to explore a different approach by converting the genomic
 data into images. This approach allows us to leverage the power of Convolutional Neural Networks (CNNs) to classify the images and
-identify the TB strains. These images are generated from the genomic data by applying various metrics to the nucleotide sequences,
-which are then converted into pixel values. The resulting images can be used to train a CNN to classify the TB strains based on their
-genomic data. This approach has the potential to improve the classification accuracy and provide a more robust method for identifying
-TB strains.
-
+identify the TB strains. These images are generated from the genomic data by applying five metrics to the nucleotide sequences,
+which are then converted into pixel values. The pixel value is determined by a combination of three metrics, resulting in
+ten different combinations of metrics, each represented by a different color channel in the image (Red, Green and Blue, RGB).
+The resulting images can be used to train a CNN to classify the TB strains based on their genomic data. This approach has the
+potential to improve the classification accuracy and provide a more robust method for identifying TB strains.
 
 \section{Building the dataset}
 \label{sec:building_dataset}
 
-For this experiment, each genome was converted into an image where each pixel is determined by a combination of three metrics of
+As mentioned earlier, each genome was converted into an image where each pixel is determined by a combination of three metrics of
 following metrics:
 
 \begin{itemize}
-	\item \textbf{Chargaff} index: provides the fraction of nucleic bases G and C of the sequence. The formula is:
+	\item \textbf{Chargaff} index~\textsuperscript{\cite{Clarke-Hurst-2006}}: provides the fraction of nucleic bases G and C of the sequence.
+	      The formula is:
 	      \begin{equation}
 		      100 \times \frac{Gcount + Ccount}{Sequence\_size}
 	      \end{equation}
-	\item \textbf{Component} index: evaluates the distribution of the bases in a sequence by comparing the number of each base A and
-	      T to the expected frequency of those bases in a balanced distribution. The formula is:
+	\item \textbf{Component} index~\textsuperscript{\cite{Mrazek-Karlin-1998}}: evaluates the distribution of the bases in a sequence
+	      by comparing the number of each base A and T to the expected frequency of those bases in a balanced distribution. The formula is:
 	      \begin{equation}
 		      \frac{(Acount + Tcount) + \frac{Sequence\_size}{2}}{\frac{Sequence\_size}{2}}
 	      \end{equation}
-	\item \textbf{Diversity} index: measures the diversity of bases in a sequence by comparing the number of different subsequences of a
-	      given size to the expected frequency of those subsequences in a balanced distribution. The formula is:
+	\item \textbf{Diversity} index~\textsuperscript{\cite{Peregrin-Alvarez-Parkinson-2007}}: measures the diversity of bases in a sequence
+	      by comparing the number of different subsequences of a given size to the expected frequency of those subsequences in a balanced
+	      distribution. The formula is:
 	      \begin{equation}
 		      \frac{Number\textsubscript{unique subsequences}}{Expected\textsubscript{subsequences frequency}}
 	      \end{equation}
-	\item \textbf{Skew} index: measures the asymmetry of the distribution of nucleobases in a sequence. The formula is:
+	\item \textbf{Skew} index~\textsuperscript{\cite{Arakawa-Tomita-2007}}: measures the asymmetry of the distribution of nucleobases in
+	      a sequence. The formula is:
 	      \begin{equation}
 		      \frac{(Gcount - Ccount)}{Sequence\_size}
 	      \end{equation}
-	\item \textbf{Nuclescore} index: empirical measure that combines multiple metrics from a genome sequence to synthesize the nucleotide
+	\item \textbf{Nuclescore} index~\textsuperscript{\cite{Moco-et-al-2022}}: empirical measure that combines multiple metrics from a genome sequence to synthesize the nucleotide
 	      information of a genome in order to differentiate species based only on their sequences. The formula is:
 	      \begin{equation}
 		      \log_{2}(\frac{Variance \times GC\textsubscript{ratio} \times AT\textsubscript{count}/GC\textsubscript{ratio}}{\sqrt{Sequence\_size}})
@@ -286,7 +307,7 @@ classes:
 \end{itemize}
 
 We also made mosaic images by combining the corresponding images from each combination of metrics resulting in a 5x2 grid rectangular image as shown
-in Figure~\ref{fig:mosaic_example}. We chose to a 5x2 grid because it creates complete images without any empty pixels, which is important for the
+in Figure~\ref{fig:mosaic_example}. We chose a 5x2 grid because it creates complete images without any empty pixels, which is important for the
 training of the CNN. The images are also resized to a 20x50px resolution for training.
 
 \begin{figure}[H]
@@ -319,7 +340,7 @@ Composition and Diversity metrics at 100px resolution, for the mosaic images we 
 \label{subsubsec:results_initial_testing}
 
 As shown in Figure~\ref{fig:cnn_validation_accuracy_std}, the 4px images yielded the worst performance, with a validation accuracy between 66\%
-and 76\%. We then observe a significant improvement in performance as the resolution increases with the accuracy starting to stabilize
+and 76\%. We then observed a significant improvement in performance as the resolution increases with the accuracy starting to stabilize
 around 92\% and 94\% starting from the 36px resolution. Figure~\ref{fig:cnn_confusion_matrix_100px_std} and Table~\ref{tab:performance_metrics_100px_std}
 show that the overall performances of the model are good, except for the East-African Indian and Indo-Oceanic classes with more moderate performances.
 
@@ -614,9 +635,9 @@ drop in the performance of the model (Table~\ref{tab:combined_techniques_perform
 which is the worst performance we have seen so far. Once again, the model misclassified a lot of Euro-American samples as East-African Indian, which may be a
 side effect of the combination.
 
-Earlier, we mentioned that we would only present the results for images at 100px resolution for the Chargaff-Component-Diversity combination, but it's worth
+Earlier, we stated that we would only present the results for images at 100px resolution for the Chargaff-Component-Diversity combination, but it's worth
 mentioning that, for the individual images, we observed a disparity in validation accuracy between the different combinations. The accuracy ranges from 75\%
-to 82\% at 100px resolution, they are also the lowest accuracy observed for the individual images as shown in Figure~\ref{fig:combined_techniques_accuracy}.
+to 82\% at 100px resolution, they also represent the lowest accuracies observed for the individual images as shown in Figure~\ref{fig:combined_techniques_accuracy}.
 
 \begin{table}[H]
 	\centering
